@@ -1,0 +1,17 @@
+---
+version: "2.1"
+services:
+  sonarr:
+    image: lscr.io/linuxserver/readarr:nightly
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA}/readarr:/config
+      - ${MEDIA}/books:/books #optional
+      - ${MEDIA}/downloads:/downloads #optional
+    ports:
+      - 8787:8787
+    restart: unless-stopped

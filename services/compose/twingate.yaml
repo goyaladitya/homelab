@@ -1,0 +1,14 @@
+services:
+  twingate_connector:
+    container_name: twingate-huge-porpoise
+    restart: always
+    image: "twingate/connector:latest"
+    environment:
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+      - TWINGATE_API_ENDPOINT=/connector.stock
+      - TWINGATE_NETWORK=garageinc
+      - TWINGATE_ACCESS_TOKEN=eyJhbGciOiJFUzI1NiIsImtpZCI6IjAxX3NtYUplUVRKRk5INm52Rkl0ZWdUelJyOXVZeVY1Slg0M3laQzdwX1UiLCJ0eXAiOiJEQVQifQ.eyJudCI6IkFOIiwiYWlkIjoiMTYwMTk1IiwiZGlkIjoiOTU3MjA3IiwianRpIjoiNWYxZjA3YTMtMGM4Yi00ZGRkLWFiZjktNGIzNzdjNTE0YTY4IiwiaXNzIjoidHdpbmdhdGUiLCJhdWQiOiJnYXJhZ2VpbmMiLCJleHAiOjE2OTU4OTc0ODcsImlhdCI6MTY5NTg5Mzg4NywidmVyIjoiNCIsInRpZCI6IjQ4MjQ0Iiwicm53IjoxNjk1ODk0MTg3LCJybmV0aWQiOiI1OTM0MSJ9.hOUpM-BGSJgxZiJfaXmLTvfPZK80TQBzsHztt-byXnmv6AQPJfX8W5077sZ5udL_V-JI-Bw59jbOMxIQtUfazA
+      - TWINGATE_REFRESH_TOKEN=7pjLt2Tc304vA16Px2J7mN2nR360h-vyr6jtZieNb3py6ju6RDft32tcPtsxRqQdJYcMiXe3vCJQ7kpcS_IdmVnBy2OA4G0QD3U6FS7xRW1dw3HM1GLJNvEWIkS56n6BPkaTfA
+      - TWINGATE_LOG_LEVEL=3
+    sysctls:
+      net.ipv4.ping_group_range: "0 2147483647"

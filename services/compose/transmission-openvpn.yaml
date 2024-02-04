@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+    transmission-openvpn:
+        container_name: transmission
+        cap_add:
+            - NET_ADMIN
+        volumes:
+            - '${MEDIA}/downloads/:/data'
+            - '${APPDATA}/transmission:/config'
+            - '${APPDATA}/openvpn-config:/etc/openvpn/custom/'
+        environment:
+            - PUID=${PUID}
+            - PGID=${PGID}
+            - TZ=${TZ}
+            - OPENVPN_PROVIDER=custom
+            - OPENVPN_CONFIG=${OVPN_CONFIG}
+            - OPENVPN_USERNAME=${VPN_USERNAME}
+            - OPENVPN_PASSWORD=${VPN_PASSWORD}
+            - LOCAL_NETWORK=192.168.1.0/24
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+        ports:
+            - '9091:9091'
+        image: haugene/transmission-openvpn
+        networks:
+            - network1
+networks:
+  network1:
+    name: ${ARR_NETWORK}
+    external: true

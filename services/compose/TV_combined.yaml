@@ -1,0 +1,71 @@
+---
+version: "2"
+services:
+  qbittorrentvpn:
+    image: chrisjohnson00/qbittorrent-openvpn:latest
+    container_name: qbittorrentvpn
+    privileged: true   
+    environment:
+      - VPN_USERNAME=rii2hmiUqxsYHtvTJurqdzvv
+      - VPN_PASSWORD=iZXZZqrFZXfdccnUBsyMFvo7
+      - PUID=1001 #optional
+      - PGID=100 #optional
+      - WEBUI_PORT_ENV=8080 #optional
+      - INCOMING_PORT_ENV=8999 #optional
+      - VPN_ENABLED=yes
+      - LAN_NETWORK=192.168.68.0/24
+      - NAME_SERVERS=103.86.96.100,103.86.99.100
+    ports:
+      - 8080:8080
+      - 8999:8999
+      - 8999:8999/udp
+    volumes:
+      - /SDD/appdata/qbittorrent:/config
+      - /DATA/downloads:/downloads
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1001
+      - PGID=100
+      - TZ=Etc/UTC
+    volumes:
+      - /SDD/appdata/sonarr:/config
+      - /DATA/shows:/tv #optional
+      - /DATA/downloads:/downloads #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1001
+      - PGID=100
+      - TZ=Europe/London
+    volumes:
+      - /SDD/appdata/radarr:/config
+      - /DATA/movies:/movies #optional
+      - /DATA/downloads:/downloads #optional
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1001
+      - PGID=100
+      - TZ=Europe/London
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS= #optional
+    volumes:
+      - /SDD/appdata/jackett:/config
+      - /DATA/downloads:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped

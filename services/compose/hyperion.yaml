@@ -1,0 +1,27 @@
+services:
+  hyperion:
+    image: sirfragalot/hyperion.ng:2.0.0-alpha.10-armv7l
+    volumes:
+      - /SDD/appdata/hyperion:/root/.hyperion:rw
+    devices:
+      # - /dev/video0:/dev/video0
+      - /dev/bus/usb/001/004:/dev/video0
+      - /dev/spidev0.0:/dev/spidev0.0
+    network_mode: host
+    environment:
+      - TZ=Europe/London
+      - PGID=1001
+      - PUID=100
+    ports:
+      - target: 19445
+        published: 19445
+        protocol: tcp
+        mode: host
+      - target: 19444
+        published: 19444
+        protocol: tcp
+        mode: host
+      - target: 8090
+        published: 8090
+        protocol: tcp
+    privileged: true

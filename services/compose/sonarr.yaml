@@ -1,0 +1,23 @@
+---
+version: "2.1"
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA}/sonarr:/config
+      - ${MEDIA}/shows:/tv #optional
+      - ${MEDIA}/downloads:/downloads #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+            - network1
+networks:
+  network1:
+    name: ${ARR_NETWORK}
+    external: true
